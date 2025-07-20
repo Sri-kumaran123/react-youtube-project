@@ -1,10 +1,26 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios';
 
-export const fetchPosts = createAsyncThunk(
+const API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
+// In Vite, use import.meta.env for environment variables
+// Make sure VITE_YOUTUBE_API_KEY is defined in your .env file
+export const fetchVideos = createAsyncThunk(
     'posts/fetchPosts',
-   async ({ query }, thunkAPI) => { 
+    async ({ query }, thunkAPI) => { 
+        try {
+            let endpoint = '';
+            if (query) {
+                endpoint = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&q=${encodeURIComponent(query)}&type=video&key=${API_KEY}`;
+            } else {
+                endpoint = `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&chart=mostPopular&maxResults=20&regionCode=US&key=${API_KEY}`;
+            }
 
+            const response = await axios.get(endpoint);
+            // For search, items are in response.data.items, but for videos, items are also in response.data.items
+            return response.data.items;
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error.response?.error?.message || error.message);
+        }
     }
 );
 const initialState = {
