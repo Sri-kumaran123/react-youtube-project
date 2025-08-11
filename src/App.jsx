@@ -10,28 +10,26 @@ import Watch from './pages/Watch'
 import Search from './pages/Search'
 import store from './store/store'
 import Layout from './pages/Layout'
+import Error from './pages/Error'
 
 
 
 
 function App() {
-  const PATH = [
-    {path:"/search", element:<Search/>},
-    {path:"/watch:id", element:<Watch/>},
-  ];
+  
 
   return (
      <BrowserRouter>
-     <Provider store={store}>
+      <Provider store={store}>
         <Routes>
-          <Route path='/' element={<Layout />}>
-            <Route index element={<Home />} />
+          <Route path='/'>
+            <Route index element={<Layout />}/>
+            <Route path='/search/:content?' element={<Search />} />
           </Route>
-        {
-          PATH.map((x,index)=><Route path={x.path} element={x.element} key={index} />)
-        }
-       </Routes>
-     </Provider>
+          <Route path='watch/:id' element={<Watch />} />
+          <Route path='/*' element={<Error />} />
+        </Routes>
+      </Provider>
      </BrowserRouter>
   )
 }
