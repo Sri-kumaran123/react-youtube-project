@@ -1,33 +1,47 @@
-// src/pages/Home.jsx
-import React, { useEffect } from "react";
+// Home.jsx
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useRef, useCallback } from "react";
 import { fetchVideos } from "../store/postslice";
-import VideoDesc from "../components/VideoDesc";
+import GridView from "../components/GridView";
 
-function Home() {
+export default function Home() {
   const dispatch = useDispatch();
-  const videos = useSelector((state) => state.post.videos);
+  const { loading, nextPageToken } = useSelector((state) => state.post);
+  const loaderRef = useRef(null);
 
+  // Initial load
   useEffect(() => {
-    dispatch(fetchVideos({ query: "" }));
+    dispatch(fetchVideos({ query: '' }));
   }, [dispatch]);
 
+  // IntersectionObserver to load more when bottom is reached
+  const handleObserver = useCallback(
+    (entries) => {
+      const target = entries[0];
+      if (target.isIntersecting && nextPageToken && !loading) {
+        dispatch(fetchVideos({ query: '', pageToken: nextPageToken }));
+      }
+    },
+    [dispatch, loading, nextPageToken]
+  );
+
+  useEffect(() => {
+    const option = { root: null, rootMargin: "100px", threshold: 0 };
+    const observer = new IntersectionObserver(handleObserver, option);
+    if (loaderRef.current) observer.observe(loaderRef.current);
+    return () => observer.disconnect();
+  }, [handleObserver]);
+
   return (
-    <div className="max-w-7xl mx-auto p-4">
-      <h1 className="text-2xl md:text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100">
-        YouTube Clone - Video Feed
-      </h1>
-      {videos && videos.length > 0 ? (
-        <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {videos.map((video) => (
-            <VideoDesc key={video.id} video={video} />
-          ))}
-        </div>
-      ) : (
-        <p className="text-gray-600 dark:text-gray-300">Loading videos...</p>
-      )}
+    <div className="w-full h-full flex flex-col">
+      <GridView />
+
+      {/* Loader */}
+      <div ref={loaderRef} className="p-6 flex justify-center">
+        {loading && (
+          <div className="w-8 h-8 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
+        )}
+      </div>
     </div>
   );
 }
-
-export default Home;
