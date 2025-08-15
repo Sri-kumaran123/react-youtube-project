@@ -1,57 +1,23 @@
-import { SIDEBAR_MENU } from "../assets/constant";
-import { useContext } from "react";
-import { menuState } from "../pages/Layout";
+import { SIDEBAR_MENU } from "assets/constant"
+import { NavLink } from "react-router-dom"
+export default function Sidebar({sideBar}){
 
-function SidebarItem({ icon: Icon, title }) {
-    
-    return (
-        <div
-            className="
-                cursor-pointer
-                flex flex-row items-center gap-4
-                p-3 my-1
-                rounded-lg
-                hover:bg-gray-200 dark:hover:bg-gray-700
-                transition-colors
-            "
-        >
-            <span 
-            className="text-xl">
-                <Icon />
-            </span>
-            <p className="text-base font-medium">
-                {title}
-            </p>
-        </div>
-    );
+    return <div className={`${sideBar?"hidden":"block"} h-full  flex-1 border-r-2 border-gray-300 transition-all ease-in`}>
+        <ul>
+            {
+                SIDEBAR_MENU.map(x=>{
+                const Icon = x.icon;
+                
+                return <NavLink>
+                    <li className="flex flex-row p-3 gap-3 items-center text-xl  transition-all ease-in hover:bg-black hover:text-white
+                                    m-1 rounded-md ">
+                        <Icon size={24}/>
+                        <span className="capitalize">
+                            {x.title}
+                        </span>
+                    </li>
+                </NavLink>})
+            }
+        </ul>
+    </div>
 }
-
-function Sidebar() {
-    const {isOpen, setIsOpen} = useContext(menuState);
-    // if(!isOpen) return null;
-    return (
-        <>
-        
-         <div 
-         className={`
-                w-64
-                bg-gray-50 dark:bg-gray-900 p-4
-                transform ${isOpen ? "translate-x-0" : "-translate-x-full"}
-                transition-transform duration-300 ease-in-out
-                z-40
-            `}
-         >
-            {SIDEBAR_MENU.map((x) => (
-                <SidebarItem
-                    key={x.id || x.title} // safer than index
-                    icon={x.icon}
-                    title={x.title}
-                />
-            ))}
-        </div>
-        </>
-       
-    );
-}
-
-export default Sidebar;

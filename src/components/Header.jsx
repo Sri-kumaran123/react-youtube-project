@@ -1,29 +1,33 @@
-import { TITLE } from "../assets/constant";
-import Search from "./Search";
-import { FiMenu, FiX } from "react-icons/fi";
-import { useContext } from "react";
-import { menuState } from "../pages/Layout";
+import { TITLE } from "assets/constant";
+import SearchBox from "./SearchBox";
+import { GrMenu } from "react-icons/gr";
 
-function Header(){
-    const {isOpen, setIsOpen} = useContext(menuState);
+export default function Header({ toggle }) {
+  return (
+    <header className="h-16 px-4 flex items-center bg-white shadow-md sticky top-0 z-50">
+      {/* <span
+        onClick={() => toggle((prev) => !prev)}
+        className="cursor-pointer"
+      >
+        <GrMenu />
+      </span> */}
+      {/* Logo / Title */}
+      <h1
+        className="hidden md:block pl-3 md:text-2xl  font-sans cursor-pointer select-none mr-4"
+        
+      >
+        {TITLE}
+      </h1>
 
-    return <header className="h-24 w-full flex flex-row">
-        <p className="flex felx-row w-64 items-center justify-center text-2xl gap-2 cursor-pointer">
-            <span
-                onClick={()=>{
-                    setIsOpen(prev=>!prev)
-                }}
-            >
-                <FiMenu />
-            </span>
-            <span className="text-xl">
-                {TITLE}
-            </span>
-        </p>
-        <div className="flex-1 bg-red-300 justify-center">
-            <Search />
-        </div>
+      {/* Search box centered for desktop */}
+      <div className="flex-grow hidden sm:flex justify-center">
+        <SearchBox />
+      </div>
+
+      {/* Search box icon for mobile */}
+      <div className="sm:hidden ml-auto">
+        <SearchBox mobile />
+      </div>
     </header>
+  );
 }
-
-export default Header;
