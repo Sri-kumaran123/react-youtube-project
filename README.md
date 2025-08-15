@@ -19,6 +19,7 @@ A modern web application built with **React**, **Vite**, **Redux**, and **Tailwi
 ---
 
 ## 📂 Project Structure
+```plaintext
 my-project/
 ├── public/                 # Public assets (favicon, etc.)
 ├── src/                    # Main source code
