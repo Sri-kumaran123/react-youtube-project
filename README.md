@@ -1,12 +1,38 @@
-# React + Vite
+# 🚀 My React + Vite Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern web application built with **React**, **Vite**, **Redux**, and **Tailwind CSS** for fast performance, state management, and beautiful styling.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📸 Preview
+![App Screenshot](./result.jpg)
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🛠️ Tech Stack
+- **React** – UI library
+- **Vite** – Next-generation frontend tooling
+- **Redux Toolkit** – State management
+- **Tailwind CSS** – Utility-first CSS framework
+- **JavaScript / ES6+**
+
+---
+
+## 📂 Project Structure
+my-project/
+├── public/                 # Public assets (favicon, etc.)
+├── src/                    # Main source code
+│   ├── assets/             # Images, icons, and static files
+│   ├── components/         # Reusable UI components
+│   ├── pages/              # Page components (routes)
+│   ├── store/              # Redux store & slices
+│   ├── styles/             # Global styles (Tailwind base)
+│   ├── App.jsx             # Main App component
+│   ├── main.jsx            # React entry point
+│   └── index.css           # Tailwind CSS entry file
+├── .gitignore
+├── package.json
+├── postcss.config.js
+├── tailwind.config.js
+├── vite.config.js
+└── README.md
