@@ -3,16 +3,22 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useCallback } from "react";
 import { fetchVideos } from "../store/postslice";
 import GridView from "../components/GridView";
+import { useSearchParams } from "react-router-dom";
+import useCallFetch from "../hooks/useCallDipatchQuery";
 
 export default function Home() {
   const dispatch = useDispatch();
+  // const [searchparams, setSearchParams] = useSearchParams();
   const { loading, nextPageToken } = useSelector((state) => state.post);
   const loaderRef = useRef(null);
+  
+  const [searchparams, executeCall] = useCallFetch();
 
   // Initial load
   useEffect(() => {
-    dispatch(fetchVideos({ query: '' }));
-  }, [dispatch]);
+    // dispatch(fetchVideos({ query: '' }));
+    executeCall();
+  }, [dispatch, searchparams]);
 
   // IntersectionObserver to load more when bottom is reached
   const handleObserver = useCallback(

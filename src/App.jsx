@@ -27,7 +27,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Layout />}>
             <Route index element={<Home />}/>
-            <Route path='/search/:content?' element={<Search />} />
+            {/* <Route path='/search/:content?' element={<Search />} /> */}
           </Route>
           <Route path='watch/:id' element={<Watch />} />
           <Route path='/*' element={<Error />} />
